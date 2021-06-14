@@ -12,16 +12,15 @@ public class PlayerMesh
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private GameObject[] playerMesh = new GameObject[7];
-    [SerializeField] private GameObject hairMesh;
+    public GameObject[] playerMesh = new GameObject[7];
+    public GameObject hairMesh;
     [SerializeField] private PlayerMesh playerDefaultMesh;
 
-    Equipment equipment;
-    Inventory inventory;
+    private Equipment equipment;
+    private Inventory inventory;
 
     public delegate void RefreshMesh();
     public static RefreshMesh OnRefreshMeshAsStatic;
-
     public enum PlayerPart
     {
         Helmet,
@@ -42,6 +41,7 @@ public class Player : MonoBehaviour
     {
         GameplayManager.GetInstance().SetPlayer(this);
         OnRefreshMeshAsStatic += UpdateMesh;
+        Invoke(nameof(UpdateMesh), 0.01f);
     }
 
     void OnDestroy()

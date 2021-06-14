@@ -33,6 +33,11 @@ public class UiInventory : MonoBehaviour
         sortBDrop = sortBRect.GetComponent<TMP_Dropdown>();
     }
 
+    private void OnEnable()
+    {
+        RefreshAllButtons();
+    }
+
     void Start()    //   Carrera de start con Inventory
     {
         Invoke(nameof(IniciarInventarioUI), 0);       // ver como iniciar despues de la lógica de inventario.
@@ -218,8 +223,6 @@ public class UiInventory : MonoBehaviour
                 slotDrop.SetButton(slotDrop.GetIndex(), slotid1);
                 slotPick.RefreshButton();
                 slotDrop.RefreshButton();
-
-
             }
         }
         else if (equipment.SwapItem(slotPick.GetIndex(), slotDrop.GetIndex()))
