@@ -18,6 +18,7 @@ public class UiInventory : MonoBehaviour
     public Inventory inventory;
     public Equipment equipment;
     public GameObject player;
+    public GameObject itemDropped;
 
     public Image slotAux;
     public RectTransform content;
@@ -198,6 +199,9 @@ public class UiInventory : MonoBehaviour
         {
             if (slotPick.GetPlayerList() == UiItemSlot.PlayerList.Inventory)
             {
+                GameObject dropped = Instantiate(itemDropped, inventory.transform.position, Quaternion.identity);
+                dropped.GetComponent<ItemDropped>().UpdateItem(slotPick.GetID(), inventory.GetSlot(slotPick.GetIndex()).amount);
+                dropped.transform.position = new Vector3(dropped.transform.position.x, dropped.transform.position.y+0.1f, dropped.transform.position.z);
                 inventory.DeleteItem(slotPick.GetIndex());
                 slotPick.RefreshButton();
             }

@@ -13,10 +13,21 @@ public class ItemDropped : MonoBehaviour
 
     void Start()
     {
-        idItem = (idItem < 0) ? GameplayManager.GetInstance().GetRandomItemID() : idItem;
-        amount = GameplayManager.GetInstance().GetRandomAmmountOfItem(idItem);
+        if (idItem < 0)
+        {
+            idItem = GameplayManager.GetInstance().GetRandomItemID();
+            amount = GameplayManager.GetInstance().GetRandomAmmountOfItem(idItem);
+            UpdateItem(idItem, amount);
+        }
+    }
+
+    public void UpdateItem(int idItem, int amount)
+    {
+        this.idItem = idItem;
+        this.amount = amount;
 
         Debug.Log("ID instanciado: " + idItem);
+        Debug.Log("Con cantidad: " + amount);
 
         MeshFilter meshFil = GetComponent<MeshFilter>();
         MeshRenderer meshRen = GetComponent<MeshRenderer>();
@@ -40,7 +51,6 @@ public class ItemDropped : MonoBehaviour
             meshRen.material = mat;
         }
     }
-
     void Update()
     {
         
