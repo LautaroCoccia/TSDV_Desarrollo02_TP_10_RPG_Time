@@ -8,15 +8,17 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] int lives = 3;
     [SerializeField] int score = 0;
-    [SerializeField] int enemiesLeft = 0;
-
+    [SerializeField] int objAlive = 0;
+    [SerializeField] int scoreToAdd = 0;
     [SerializeField] private TextMeshProUGUI UIScore;
-    [SerializeField] private TextMeshProUGUI UIHealth;
     [SerializeField] private TextMeshProUGUI UIEnemies;
     [SerializeField] private TextMeshProUGUI UIExtras;
-    [SerializeField] private GameObject PauseMenuUI;
-    [SerializeField] private GameObject QuitMenuUI;
-    [SerializeField] private GameObject GameOverMenuUI;
+    [SerializeField] private Image UIHealth;
+    [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject quitMenuUI;
+    [SerializeField] private GameObject gameOverMenuUI;
+    [SerializeField] private Button continueButton;
+    [SerializeField] private Button mainMenuButton;
 
     private static bool pause = false;
     private static LevelManager _instanceLevelManager;
@@ -38,38 +40,48 @@ public class LevelManager : MonoBehaviour
     }
     private void Start()
     {
-        UIHealth.text = ("Lives: " + lives);
-        UIEnemies.text = ("Left: " + enemiesLeft);
+        pause = false;
+        SetTimeScale(1);
+        UIHealth.fillAmount = 1;
+        UIEnemies.text = ("Left: " + objAlive);//Solo sirve para hacer debug
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && lives > 0)
         {
             SetPause();
         }
+
     }
-    public void StartEnemies()
+    //Solo sirve para hacer debug
+    public void StartObj()
     {
-        enemiesLeft++;
+        objAlive++;
+        UIEnemies.text = ("Left: " + objAlive);
     }
-    public void UpdateEnemies()
+    //Solo sirve para hacer debug
+    public void UpdateObj()
     {
-        enemiesLeft--;
-        UIEnemies.text = ("Left: " + enemiesLeft);
+        objAlive--;
+        UIEnemies.text = ("Left: " + objAlive);
+        if(objAlive<=0)
+        {
+            GameOver();
+        }
     }
-    public void UpdateScore(int SCORE)
+    public void UpdateScore()
     {
-        score += SCORE;
-        UIScore.text = ("Score: " + score);
+        score += scoreToAdd;
+        UIScore.text = ("" + score);
     }
-    public void UpdateHealth()
+    public void UpdateLives()
     {
         lives--;
+        UIHealth.fillAmount -= 0.34f;
         if(lives< minLives)
         {
             GameOver();
         }
-        UIHealth.text = ("Lives: " + lives);
     }
     private void SetTimeScale(int scale)
     {
@@ -78,7 +90,10 @@ public class LevelManager : MonoBehaviour
     private void GameOver()
     {
         SetTimeScale(0);
-        GameOverMenuUI.SetActive(true);
+        gameOverMenuUI.SetActive(true);
+        continueButton.Select();
+        mainMenuButton.Select();
+
     }
     public void SetPause()
     {
@@ -86,13 +101,26 @@ public class LevelManager : MonoBehaviour
         if (pause)
         {
             SetTimeScale(0);
-            PauseMenuUI.SetActive(pause);
+            pauseMenuUI.SetActive(pause);
+            continueButton.Select();
         }
         else
         {
             SetTimeScale(1);
-            PauseMenuUI.SetActive(pause);
-            QuitMenuUI.SetActive(pause);
+            pauseMenuUI.SetActive(pause);
+            quitMenuUI.SetActive(pause);
+            mainMenuButton.Select();
+        }
+    }
+    public void SelectButton()
+    {
+        if (continueButton.IsActive())
+        {
+            continueButton.Select();
+        }
+        else if (mainMenuButton.IsActive())
+        {
+            mainMenuButton.Select();
         }
     }
 }

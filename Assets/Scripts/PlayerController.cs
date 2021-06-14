@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IHittable
 {
     public Player player;
     public float forceSpeed = 20;
@@ -13,16 +13,13 @@ public class PlayerController : MonoBehaviour
     public List<ItemDropped> itemsPicking;
     private Animator anim;
 
+    //int health = 100;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         anim = player.GetComponent<Animator>();
         inventory = player.GetComponent<Inventory>();
-    }
-
-    void Start()
-    {
-        
     }
 
     private void Update()
@@ -83,5 +80,14 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("No hay mas espacio en el Inventario.");
         }
+    }
+
+    public void OnHit(int damage)
+    {
+        //health = health - damage;
+        //if(health <= 0)
+        //{
+        //    //Muere.
+        //}
     }
 }
