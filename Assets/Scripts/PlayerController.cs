@@ -1,7 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class PlayerController : MonoBehaviour, IHittable
+[Serializable]
+public class Stats
+{
+    public int health = 100;
+    public int damage = 10;
+    public float atkRate = 1.2f;
+}
+
+public class PlayerController : MonoBehaviour, ICharacter
 {
     public Player player;
     public float forceSpeed = 20;
@@ -13,7 +23,7 @@ public class PlayerController : MonoBehaviour, IHittable
     public List<ItemDropped> itemsPicking;
     private Animator anim;
 
-    //int health = 100;
+    public Stats stats;
 
     private void Awake()
     {
@@ -82,12 +92,18 @@ public class PlayerController : MonoBehaviour, IHittable
         }
     }
 
-    public void OnHit(int damage)
+    public void Hit()
     {
-        //health = health - damage;
-        //if(health <= 0)
-        //{
-        //    //Muere.
-        //}
+        throw new System.NotImplementedException();
+    }
+
+    public void ReceiveHit(int damage)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Dropeable()
+    {
+        throw new System.NotImplementedException();
     }
 }

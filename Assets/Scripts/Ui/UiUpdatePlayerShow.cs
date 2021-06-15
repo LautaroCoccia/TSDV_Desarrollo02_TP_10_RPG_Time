@@ -28,6 +28,9 @@ public class UiUpdatePlayerShow : MonoBehaviour
         }
         for (int i = 5; i < parts.Length; i++)
         {
+            //parts[i].transform.position = playerInGame.playerMesh[i].transform.position;
+            parts[i].transform.localRotation = playerInGame.playerMesh[i].transform.localRotation;
+
             parts[i].GetComponent<MeshFilter>().sharedMesh = playerInGame.playerMesh[i].GetComponent<MeshFilter>().sharedMesh;
         }
 
