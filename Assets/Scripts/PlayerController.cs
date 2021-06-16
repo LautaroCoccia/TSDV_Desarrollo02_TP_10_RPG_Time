@@ -22,7 +22,9 @@ public class PlayerController : MonoBehaviour, ICharacter
     public GameObject pickeable;
     public List<ItemDropped> itemsPicking;
     private Animator anim;
-    public GameObject meteorites;
+    public GameObject damageable;
+    float time = 0;
+
     public Stats stats;
 
     private void Awake()
@@ -34,17 +36,10 @@ public class PlayerController : MonoBehaviour, ICharacter
 
     private void Update()
     {
+        time += Time.deltaTime;
         if (!inventoryOpened)
             Move();
         InputsPlayer();
-        if(meteorites.transform.position.y + transform.localScale.y >= 0 )
-        {
-            meteorites.transform.position = new Vector3(meteorites.transform.position.x, meteorites.transform.position.y - (Time.deltaTime *2), meteorites.transform.position.z);
-        }
-        else
-        {
-            meteorites.SetActive(false);
-        }
     }
 
     void Move()
@@ -75,17 +70,22 @@ public class PlayerController : MonoBehaviour, ICharacter
             inventoryOpened = !inventoryOpened;
             panelInventory.SetActive(inventoryOpened);
         }
-        else if (!inventoryOpened && Input.GetMouseButtonDown(0))   // Attack
+        else if (!inventoryOpened && Input.GetMouseButtonDown(0)) // Attack
         {
-            int atk = Random.Range(1, 6);
-            anim.SetInteger("AttackStyle", atk);
-            anim.SetTrigger("Attack");
+            Debug.Log("ataque");
+            if (time > stats.atkRate)
+            {
+                time = 0;
+                int atk = Random.Range(1, 6);
+                anim.SetInteger("AttackStyle", atk);
+                anim.SetTrigger("Attack");
+                damageable.SetActive(true);
+                Invoke(nameof(Hit), 0.1f);
+            }
         }
-        else if (!inventoryOpened && Input.GetMouseButtonDown(1) && !meteorites.activeSelf)   // Spawn de Meteoritos
+        else if (!inventoryOpened && Input.GetMouseButtonDown(1))   // Spawn de Meteoritos
         {
-            meteorites.SetActive(true);
-            meteorites.transform.position = transform.position + (transform.forward * 5) + new Vector3(0,4,0);
-            
+
         }
     }
 
@@ -104,12 +104,26 @@ public class PlayerController : MonoBehaviour, ICharacter
 
     public void Hit()
     {
-        throw new System.NotImplementedException();
+        GameObject objetive = damageable.GetComponent<DamageableBox>().objetive;
+        if (objetive == null)
+            return;
+
+        objetive.GetComponent<ICharacter>().ReceiveHit(stats.damage);
     }
 
     public void ReceiveHit(int damage)
     {
-        throw new System.NotImplementedException();
+        stats.health -= damage;
+        if (stats.health < 1)
+        {
+            stats.health = 0;
+            anim.SetBool("Die", true);
+        }   
+        else
+        {   
+            anim.SetTrigger("TakeDamage");
+        }   
+        LevelManager.Get().UpdateHealth(stats.health);
     }
 
     public void Dropeable()

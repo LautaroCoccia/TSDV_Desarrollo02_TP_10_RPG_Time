@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] int lives = 3;
+    [SerializeField] float lives = 3;
     [SerializeField] int score = 0;
     [SerializeField] int objAlive = 0;
     [SerializeField] int scoreToAdd = 0;
@@ -51,7 +51,6 @@ public class LevelManager : MonoBehaviour
         {
             SetPause();
         }
-
     }
     //Solo sirve para hacer debug
     public void StartObj()
@@ -74,10 +73,10 @@ public class LevelManager : MonoBehaviour
         score += scoreToAdd;
         UIScore.text = ("" + score);
     }
-    public void UpdateLives()
+    public void UpdateHealth(int actualHealth)
     {
-        lives--;
-        UIHealth.fillAmount -= 0.34f;
+        lives = (actualHealth);
+        UIHealth.fillAmount = lives / 100;
         if(lives< minLives)
         {
             GameOver();
