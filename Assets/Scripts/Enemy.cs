@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour, ICharacter
 
     void Start()
     {
+        LevelManager.Get().StartObj();
         if (amountItemDrops < 1)
         {
             Random.Range(0, 10);
@@ -61,7 +62,6 @@ public class Enemy : MonoBehaviour, ICharacter
             return;
 
         objetive.GetComponent<ICharacter>().ReceiveHit(stats.damage);
-
     }
 
     public void ReceiveHit(int damage)
@@ -69,6 +69,8 @@ public class Enemy : MonoBehaviour, ICharacter
         stats.health -= damage;
         if (stats.health < 1)
         {
+            LevelManager.Get().UpdateScore();
+            LevelManager.Get().UpdateObj();
             stats.health = 0;
             Dropeable();
             anim.SetBool("Die", true);

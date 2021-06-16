@@ -56,7 +56,10 @@ public class LevelManager : MonoBehaviour
     public void StartObj()
     {
         objAlive++;
-        UIEnemies.text = ("Left: " + objAlive);
+        if(!UIEnemies.IsActive())
+        {
+            UIEnemies.text = ("Left: " + objAlive);
+        }
     }
     //Solo sirve para hacer debug
     public void UpdateObj()
