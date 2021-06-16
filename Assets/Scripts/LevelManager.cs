@@ -68,6 +68,7 @@ public class LevelManager : MonoBehaviour
         UIEnemies.text = ("Left: " + objAlive);
         if(objAlive<=0)
         {
+            UIExtras.text = "YOU WIN";
             GameOver();
         }
     }
@@ -82,6 +83,7 @@ public class LevelManager : MonoBehaviour
         UIHealth.fillAmount = lives / 100;
         if(lives< minLives)
         {
+            UIExtras.text = "YOU LOSE";
             GameOver();
         }
     }
@@ -95,7 +97,6 @@ public class LevelManager : MonoBehaviour
         gameOverMenuUI.SetActive(true);
         continueButton.Select();
         mainMenuButton.Select();
-
     }
     public void SetPause()
     {

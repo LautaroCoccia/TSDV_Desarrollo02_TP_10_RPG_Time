@@ -2,28 +2,14 @@
 using System;
 public class Meteorite : MonoBehaviour
 {
-    public static event Action<Meteorite> MeteoriteDeath;
 
-    [SerializeField] float minForce;
-    [SerializeField] float maxForce;
-    private Rigidbody rb;
-
-    private void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        rb = GetComponent<Rigidbody>();
-        rb.AddForce(new Vector3(0, UnityEngine.Random.Range(minForce, maxForce), 0), ForceMode.Impulse);
-    }
+        ICharacter checkICharacter = other.gameObject.GetComponent<ICharacter>();
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Enemy")
+        if (checkICharacter != null)
         {
-            //Destruir GameObject o Hacer Daño
+            checkICharacter.ReceiveHit(999);
         }
-        Destroy(this.gameObject);
-    }
-    private void OnDestroy()
-    {
-        MeteoriteDeath(this);
     }
 }

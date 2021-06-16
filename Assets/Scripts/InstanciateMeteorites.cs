@@ -13,7 +13,6 @@ public class InstanciateMeteorites : MonoBehaviour
         {
             Vector3 randomPosition = new Vector3(Random.insideUnitSphere.x * Radius, 10, Random.insideUnitSphere.z * Radius);
             Instantiate(meteorite, randomPosition, Quaternion.identity, transform);
-            Meteorite.MeteoriteDeath += OnMeteoriteDestruction;
         }
     }
     void OnMeteoriteDestruction(Meteorite meteorite) 
