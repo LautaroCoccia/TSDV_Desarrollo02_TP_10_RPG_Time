@@ -367,6 +367,10 @@ MonoBehaviour:
   panelInventory: {fileID: 4312704907960722789}
   pickeable: {fileID: 1209756759}
   itemsPicking: []
+  stats:
+    health: 100
+    damage: 10
+    atkRate: 1.2
 --- !u!136 &118793558
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2357,13 +2361,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1423773577}
-  m_LocalRotation: {x: 0.19449621, y: -0, z: -0, w: 0.9809033}
-  m_LocalPosition: {x: 0, y: 4.49, z: -2.35}
+  m_LocalRotation: {x: 0.5101296, y: -0, z: -0, w: 0.8600976}
+  m_LocalPosition: {x: 0, y: 14, z: -2.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 22.431002, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 61.345, y: 0, z: 0}
 --- !u!114 &1423773581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4036,7 +4040,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.32086182}
+  m_AnchoredPosition: {x: 0, y: 0.32080078}
   m_SizeDelta: {x: 330, y: 250}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &2103761073

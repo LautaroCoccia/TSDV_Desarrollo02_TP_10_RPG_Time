@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour, ICharacter
     public GameObject pickeable;
     public List<ItemDropped> itemsPicking;
     private Animator anim;
-
+    public GameObject meteorites;
     public Stats stats;
 
     private void Awake()
@@ -37,6 +37,14 @@ public class PlayerController : MonoBehaviour, ICharacter
         if (!inventoryOpened)
             Move();
         InputsPlayer();
+        if(meteorites.transform.position.y + transform.localScale.y >= 0 )
+        {
+            meteorites.transform.position = new Vector3(meteorites.transform.position.x, meteorites.transform.position.y - (Time.deltaTime *2), meteorites.transform.position.z);
+        }
+        else
+        {
+            meteorites.SetActive(false);
+        }
     }
 
     void Move()
@@ -73,9 +81,11 @@ public class PlayerController : MonoBehaviour, ICharacter
             anim.SetInteger("AttackStyle", atk);
             anim.SetTrigger("Attack");
         }
-        else if (!inventoryOpened && Input.GetMouseButtonDown(1))   // Spawn de Meteoritos
+        else if (!inventoryOpened && Input.GetMouseButtonDown(1) && !meteorites.activeSelf)   // Spawn de Meteoritos
         {
-
+            meteorites.SetActive(true);
+            meteorites.transform.position = transform.position + (transform.forward * 5) + new Vector3(0,4,0);
+            
         }
     }
 
